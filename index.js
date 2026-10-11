@@ -103,6 +103,21 @@ app.get('/movies/genre/:name', passport.authenticate('jwt', { session: false }),
 });
 
 //adds new user
+app.post('/movies', passport.authenticate('jwt', { session: false }), (req, res) => {
+  Movies.create({
+    Title: req.body.Title,
+    Description: req.body.Description,
+    Genre: req.body.Genre,
+    Director: req.body.Director
+  }).then((movie) => {
+    res.status(201).json(movie);
+  }).catch((error) => {
+    console.error(error);
+    res.status(500).send('Error 500: ' + error);
+  });
+});
+
+//adds new user
 app.post('/users',
   [
     check('Username', 'Username is required').isLength({ min: 5 }),
