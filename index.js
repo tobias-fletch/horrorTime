@@ -20,7 +20,12 @@ app.use(bodyParser.json());
 const frontendUrls = (process.env.FRONTEND_URL || '')
   .split(',')
   .map((u) => u.trim())
-  .filter(Boolean);
+  .filter(Boolean)
+  .map((u) => {
+    // Browsers send only the origin (no path), so normalize entries like
+    // "https://tobias-fletch.github.io/horrorTime-Client" to their origin.
+    try { return new URL(u).origin; } catch (e) { return u; }
+  });
 let allowedOrigins = [
   'http://localhost:8080',
   'http://localhost:1234',
