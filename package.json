@@ -10,15 +10,15 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/tobias-fletcher/horror-time.git"
+    "url": "git+https://github.com/tobias-fletch/horror-time.git"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/tobias-fletcher/horror-time/issues"
+    "url": "https://github.com/tobias-fletch/horror-time/issues"
   },
-  "homepage": "https://github.com/tobias-fletcher/horror-time#readme",
+  "homepage": "https://github.com/tobias-fletch/horror-time#readme",
   "dependencies": {
     "bcrypt": "^5.0.1",
     "body-parser": "^1.19.0",
