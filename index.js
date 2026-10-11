@@ -14,7 +14,19 @@ app.use(express.static('Public'));
 
 app.use(bodyParser.json());
 
-let allowedOrigins = ['http://localhost:8080', 'https://itshorrortime.herokuapp.com/users', 'http://localhost:1234', 'http://localhost:1234', 'https://itshorrortime.herokuapp.com/login', 'http://localhost:5000', 'https://zealous-banach-c1d750.netlify.app'];
+// Allowed frontend origins come from the FRONTEND_URL env var (comma-separated
+// for multiple, e.g. "https://tobias-fletch.github.io,https://myapp.netlify.app").
+// Localhost entries are kept so local dev keeps working without any env setup.
+const frontendUrls = (process.env.FRONTEND_URL || '')
+  .split(',')
+  .map((u) => u.trim())
+  .filter(Boolean);
+let allowedOrigins = [
+  'http://localhost:8080',
+  'http://localhost:1234',
+  'http://localhost:5000',
+  ...frontendUrls,
+];
 
 app.use(cors({
   origin: (origin, callback) => {
