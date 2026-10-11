@@ -1,0 +1,31 @@
+# Render blueprint for the horrorTime API (free tier).
+# Deploy via the Render dashboard: New > Blueprint > connect this repo,
+# or `render blueprint launch` with the Render CLI.
+#
+# Required environment variables (set in the Render dashboard after deploy):
+#   DB_CONNECT   - MongoDB Atlas connection string, e.g.
+#                  mongodb+srv://<user>:<password>@cluster0.xxxxx.mongodb.net/horror-time
+#                  (create a free M0 cluster at cloud.mongodb.com; whitelist
+#                   Render's outbound IPs or allow access from anywhere 0.0.0.0/0)
+#   JWT_SECRET   - long random string for signing auth tokens.
+#                  Generate one with: openssl rand -base64 64
+#                  (Render can also auto-generate it — see generateValue below)
+#   FRONTEND_URL - where the horrorTime-Client is hosted, e.g.
+#                  https://tobias-fletch.github.io/horrorTime-Client
+#                  (comma-separated if more than one frontend needs access)
+# PORT is provided automatically by Render.
+
+services:
+  - type: web
+    name: horrortime-api
+    runtime: node
+    buildCommand: npm install
+    startCommand: node index.js
+    healthCheckPath: /
+    envVars:
+      - key: DB_CONNECT
+        sync: false
+      - key: JWT_SECRET
+        generateValue: true
+      - key: FRONTEND_URL
+        sync: false
